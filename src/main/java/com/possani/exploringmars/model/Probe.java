@@ -50,27 +50,7 @@ public class Probe {
     }
 
     public Position nextPosition() {
-        CardinalDirection currentDirection = currentPosition.getCardinalDirection();
-        Position nextPosition = new Position(currentPosition);
-
-        switch (currentDirection) {
-            case NORTH:
-                nextPosition.setY(nextPosition.getY() + 1);
-                break;
-            case SOUTH:
-                nextPosition.setY(nextPosition.getY() - 1);
-                break;
-            case WEST:
-                nextPosition.setX(nextPosition.getX() - 1);
-                break;
-            case EAST:
-                nextPosition.setX(nextPosition.getX() + 1);
-                break;
-            default:
-                throw new IllegalStateException("Invalid cardinal direction");
-        }
-
-        return nextPosition;
+        return currentPosition.nextPosition();
     }
 
     public Position move(Position nextPosition) {

@@ -1,5 +1,6 @@
 package com.possani.exploringmars.model;
 
+import javafx.geometry.Pos;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -37,6 +38,12 @@ public class Field {
         if (null == probe) throw new IllegalArgumentException("Probe cannot be null");
 
         Position destination = probe.nextPosition();
+        return move(probe, destination);
+    }
+
+    public boolean move(Probe probe, Position destination) {
+        if (null == probe) throw new IllegalArgumentException("Probe cannot be null");
+
         Position origin = probe.getCurrentPosition();
 
         if (isFree(destination)) {

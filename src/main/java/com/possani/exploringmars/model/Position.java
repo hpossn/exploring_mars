@@ -57,6 +57,27 @@ public class Position {
         this.cardinalDirection = cardinalDirection;
     }
 
+    public Position nextPosition() {
+        Position nextPosition = new Position(this);
+
+        switch (cardinalDirection) {
+            case NORTH:
+                nextPosition.setY(this.getY() + 1);
+                break;
+            case SOUTH:
+                nextPosition.setY(this.getY() - 1);
+                break;
+            case WEST:
+                nextPosition.setX(this.getX() - 1);
+                break;
+            case EAST:
+                nextPosition.setX(this.getX() + 1);
+                break;
+        }
+
+        return nextPosition;
+    }
+
     @Override
     public String toString() {
         return "Coordinate{" + "x=" + x + ", y=" + y + ", cardinalDirection=" + cardinalDirection + '}';
