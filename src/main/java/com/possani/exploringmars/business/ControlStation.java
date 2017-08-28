@@ -1,10 +1,12 @@
-package com.possani.exploringmars.controller;
+package com.possani.exploringmars.business;
 
 import com.possani.exploringmars.enums.CardinalDirection;
 import com.possani.exploringmars.enums.Command;
 import com.possani.exploringmars.model.Field;
 import com.possani.exploringmars.model.Position;
 import com.possani.exploringmars.model.Probe;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +14,18 @@ import java.util.List;
 /**
  * Created by hugo. All rights reserved.
  */
+@Component
+@Scope("singleton")
 public class ControlStation {
-    private Field field;
 
-    public ControlStation(Field field) {
-        if (null == field) {
-            throw new IllegalArgumentException("Field cannot be null");
+    public Position controlProbe(Probe probe, Field field) {
+        if (null == probe || null == field) {
+            throw new IllegalArgumentException();
         }
 
-        this.field = field;
-    }
+        List<Command> commands = probe.getCommands();
 
-    public Position controlProbe(Probe probe, Command[] commands) {
-        if (null == probe) {
-            throw new IllegalArgumentException("Probe cannot be null");
-        }
-
-        if (null == commands || commands.length == 0) {
+        if (null == commands || commands.size() == 0) {
             return probe.getCurrentPosition();
         }
 
@@ -36,15 +33,15 @@ public class ControlStation {
 
         boolean allowedToMove = true;
         int currentIndex = 0;
-        int maxLength = commands.length;
+        int maxLength = commands.size();
 
         while (allowedToMove && currentIndex < maxLength) {
-            Command command = commands[currentIndex];
+            Command command = commands.get(currentIndex);
 
             if (command.changesPosition()) {
                 boolean moved = field.move(probe);
                 if (!moved) {
-                    int shiftIndexWithResolution = collisionResolution(probe, commands, currentIndex);
+                    int shiftIndexWithResolution = collisionResolution(probe, commands, currentIndex, field);
 
                     if (shiftIndexWithResolution != -1) {
                         currentIndex = currentIndex + shiftIndexWithResolution;
@@ -64,15 +61,15 @@ public class ControlStation {
         return probe.getCurrentPosition();
     }
 
-    private int collisionResolution(Probe probe, Command[] commands, int currentIndex) {
+    private int collisionResolution(Probe probe, List<Command> commands, int currentIndex, Field field) {
         Position positionCollisionHappened = probe.nextPosition();
 
-        if (currentIndex >= commands.length) return -1;
+        if (currentIndex >= commands.size()) return -1;
         List<Command> nextCommands = listCommandsUntilMove(commands, currentIndex);
         if (nextCommands.size() == 0) return -1;
 
         Position desiredPositionAfterCollision = desiredPositionAfterCollision(positionCollisionHappened, nextCommands);
-        
+
         if (desiredPositionAfterCollision.getX() == probe.getCurrentPosition().getX() &&
             desiredPositionAfterCollision.getY() == probe.getCurrentPosition().getY()) {
             probe.move(desiredPositionAfterCollision);
@@ -87,12 +84,12 @@ public class ControlStation {
         return -1;
     }
 
-    private List<Command> listCommandsUntilMove(Command[] commands, int currentIndex) {
+    private List<Command> listCommandsUntilMove(List<Command> commands, int currentIndex) {
         List<Command> commandList = new ArrayList<>();
         boolean validList = false;
 
-        for (int i = currentIndex + 1; i < commands.length; i++) {
-            Command commandAtIndex = commands[i];
+        for (int i = currentIndex + 1; i < commands.size(); i++) {
+            Command commandAtIndex = commands.get(i);
             commandList.add(commandAtIndex);
 
             if (commandAtIndex == Command.MOVE) {
@@ -114,15 +111,10 @@ public class ControlStation {
         for (Command command : nextCommands) {
             CardinalDirection direction = desiredPosition.getCardinalDirection();
 
-            switch (command) {
-                case LEFT:
-                    desiredPosition.setCardinalDirection(direction.left());
-                    break;
-                case RIGHT:
-                    desiredPosition.setCardinalDirection(direction.right());
-                    break;
-                case MOVE:
-                    desiredPosition = desiredPosition.nextPosition();
+            if(command.changesPosition()) {
+                desiredPosition = desiredPosition.nextPosition();
+            } else {
+                desiredPosition.setCardinalDirection(direction.turn(command));
             }
         }
 

@@ -3,21 +3,23 @@ package com.possani.exploringmars.model;
 import com.possani.exploringmars.enums.CardinalDirection;
 import com.possani.exploringmars.enums.Command;
 
+import java.util.List;
+
 /**
  * Created by hugo. All rights reserved.
  */
 public class Probe {
 
     private final Position initialPosition;
-    private String name;
+    private final String name;
+    private final List<Command> commands;
     private Position currentPosition;
 
-    public Probe(String name, Position initialPosition) {
+    public Probe(String name, Position initialPosition, List<Command> commands) {
         this.name = name;
-
-        // TODO : Validate initial position
         this.initialPosition = new Position(initialPosition);
         this.currentPosition = new Position(initialPosition);
+        this.commands = commands;
     }
 
     public String getName() {
@@ -32,21 +34,14 @@ public class Probe {
         return currentPosition;
     }
 
+    public List<Command> getCommands() {
+        return commands;
+    }
+
     public Position turn(Command turnToDirection) {
         CardinalDirection currentDirection = currentPosition.getCardinalDirection();
-
-        switch (turnToDirection) {
-            case LEFT:
-                currentPosition.setCardinalDirection(currentDirection.left());
-                break;
-            case RIGHT:
-                currentPosition.setCardinalDirection(currentDirection.right());
-            default:
-                break;
-        }
-
+        currentPosition.setCardinalDirection(currentDirection.turn(turnToDirection));
         return currentPosition;
-
     }
 
     public Position nextPosition() {

@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
@@ -33,10 +35,9 @@ public class TestField {
         }
     }
 
-    // TODO : Use Mockito
     @Test
     public void addProbeAndCheckIfFree() {
-        Probe probe = new Probe("first probe", new Position(5, 5, CardinalDirection.NORTH));
+        Probe probe = new Probe("first probe", new Position(5, 5, CardinalDirection.NORTH), new ArrayList<>());
         assertTrue(field.allocateNewProbe(probe));
         assertFalse(field.isFree(5, 5));
     }

@@ -12,9 +12,6 @@ public class Position {
     private int y;
     private CardinalDirection cardinalDirection;
 
-
-
-    // TODO : Validate values
     public Position(int x, int y, CardinalDirection cardinalDirection) {
         this.x = x;
         this.y = y;

@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -20,7 +22,7 @@ public class TestProbe {
 
     @Before
     public void setup() {
-        firstProbe = new Probe("First Probe", new Position(0, 0, CardinalDirection.NORTH));
+        firstProbe = new Probe("First Probe", new Position(0, 0, CardinalDirection.NORTH), new ArrayList<>());
     }
 
     @Test

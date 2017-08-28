@@ -1,14 +1,10 @@
 package com.possani.exploringmars.model;
 
-import javafx.geometry.Pos;
-import org.springframework.stereotype.Component;
-
 import java.util.Optional;
 
 /**
  * Created by hugo. All rights reserved.
  */
-@Component
 public class Field {
 
     private final Probe[][] fieldMatrix;
@@ -74,7 +70,7 @@ public class Field {
     }
 
     public boolean isFree(int x, int y) {
-        if(x < 0 || y < 0) return false;
+        if (x < 0 || y < 0) return false;
         if (x > upperRightX || y > upperRightY) return false;
         return fieldMatrix[x][y] == null;
     }

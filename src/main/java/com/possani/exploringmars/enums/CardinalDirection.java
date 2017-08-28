@@ -1,36 +1,54 @@
 package com.possani.exploringmars.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by hugo. All rights reserved.
  */
 public enum CardinalDirection {
     NORTH, SOUTH, WEST, EAST;
 
-    public CardinalDirection left() {
-        switch (this) {
-            case NORTH:
-                return WEST;
-            case SOUTH:
-                return EAST;
-            case WEST:
-                return SOUTH;
-            case EAST:
-                return NORTH;
-        }
+    private static final Map<String, CardinalDirection> codeMap = new HashMap<>();
 
-        throw new IllegalStateException("Invalid Cardinal Direction");
+    static {
+        codeMap.put("N", NORTH);
+        codeMap.put("S", SOUTH);
+        codeMap.put("W", WEST);
+        codeMap.put("E", EAST);
     }
 
-    public CardinalDirection right() {
+    @JsonCreator
+    public static CardinalDirection forValue(String value) {
+        if (null == value) {
+            throw new IllegalArgumentException();
+        }
+
+        return codeMap.get(value.toUpperCase());
+    }
+
+    @JsonValue
+    public String toValue() {
+        for (Map.Entry<String, CardinalDirection> entry : codeMap.entrySet()) {
+            if (entry.getValue() == this) return entry.getKey();
+        }
+
+        return null;
+    }
+
+    public CardinalDirection turn(Command direction) {
         switch (this) {
             case NORTH:
-                return EAST;
+                return direction == Command.LEFT ? WEST : EAST;
             case SOUTH:
-                return WEST;
+                return direction == Command.LEFT ? EAST : WEST;
             case WEST:
-                return NORTH;
+                return direction == Command.LEFT ? SOUTH : NORTH;
             case EAST:
-                return SOUTH;
+                return direction == Command.LEFT ? NORTH : SOUTH;
         }
 
         throw new IllegalStateException("Invalid Cardinal Direction");
