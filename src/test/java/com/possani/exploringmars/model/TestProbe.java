@@ -20,7 +20,7 @@ public class TestProbe {
 
     @Before
     public void setup() {
-        firstProbe = new Probe("First Probe", new Position(0, 0, CardinalDirection.N));
+        firstProbe = new Probe("First Probe", new Position(0, 0, CardinalDirection.NORTH));
     }
 
     @Test
@@ -29,24 +29,24 @@ public class TestProbe {
 
         assertEquals(0, currentPosition.getX());
         assertEquals(0, currentPosition.getY());
-        assertEquals(CardinalDirection.N, currentPosition.getCardinalDirection());
+        assertEquals(CardinalDirection.NORTH, currentPosition.getCardinalDirection());
     }
 
     @Test
     public void northTurnRight() {
         Position currentPosition = firstProbe.getCurrentPosition();
-        assertEquals(CardinalDirection.N, currentPosition.getCardinalDirection());
+        assertEquals(CardinalDirection.NORTH, currentPosition.getCardinalDirection());
 
-        Position nextPosition = firstProbe.turn(Command.R);
-        assertEquals(CardinalDirection.E, nextPosition.getCardinalDirection());
+        Position nextPosition = firstProbe.turn(Command.RIGHT);
+        assertEquals(CardinalDirection.EAST, nextPosition.getCardinalDirection());
     }
 
     @Test
     public void northTurnLeft() {
         Position currentPosition = firstProbe.getCurrentPosition();
-        assertEquals(CardinalDirection.N, currentPosition.getCardinalDirection());
+        assertEquals(CardinalDirection.NORTH, currentPosition.getCardinalDirection());
 
-        Position nextPosition = firstProbe.turn(Command.L);
-        assertEquals(CardinalDirection.W, nextPosition.getCardinalDirection());
+        Position nextPosition = firstProbe.turn(Command.LEFT);
+        assertEquals(CardinalDirection.WEST, nextPosition.getCardinalDirection());
     }
 }

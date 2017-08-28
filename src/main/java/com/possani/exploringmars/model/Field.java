@@ -53,6 +53,7 @@ public class Field {
             fieldMatrix[originX][originY] = null;
             fieldMatrix[destinationX][destinationY] = probe;
 
+            probe.move(destination);
             return true;
         }
 

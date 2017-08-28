@@ -1,18 +1,18 @@
 package com.possani.exploringmars.model;
 
 import com.possani.exploringmars.enums.CardinalDirection;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
  * Created by hugo. All rights reserved.
  */
-@Component
 public class Position {
     private int x;
     private int y;
     private CardinalDirection cardinalDirection;
+
+
 
     // TODO : Validate values
     public Position(int x, int y, CardinalDirection cardinalDirection) {

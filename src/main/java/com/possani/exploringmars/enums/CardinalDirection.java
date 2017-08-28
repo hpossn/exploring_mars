@@ -4,18 +4,18 @@ package com.possani.exploringmars.enums;
  * Created by hugo. All rights reserved.
  */
 public enum CardinalDirection {
-    N, S, W, E;
+    NORTH, SOUTH, WEST, EAST;
 
     public CardinalDirection left() {
         switch (this) {
-            case N:
-                return W;
-            case S:
-                return E;
-            case W:
-                return S;
-            case E:
-                return N;
+            case NORTH:
+                return WEST;
+            case SOUTH:
+                return EAST;
+            case WEST:
+                return SOUTH;
+            case EAST:
+                return NORTH;
         }
 
         throw new IllegalStateException("Invalid Cardinal Direction");
@@ -23,14 +23,14 @@ public enum CardinalDirection {
 
     public CardinalDirection right() {
         switch (this) {
-            case N:
-                return E;
-            case S:
-                return W;
-            case W:
-                return N;
-            case E:
-                return S;
+            case NORTH:
+                return EAST;
+            case SOUTH:
+                return WEST;
+            case WEST:
+                return NORTH;
+            case EAST:
+                return SOUTH;
         }
 
         throw new IllegalStateException("Invalid Cardinal Direction");

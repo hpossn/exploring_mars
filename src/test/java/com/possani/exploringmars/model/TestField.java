@@ -36,7 +36,7 @@ public class TestField {
     // TODO : Use Mockito
     @Test
     public void addProbeAndCheckIfFree() {
-        Probe probe = new Probe("first probe", new Position(5, 5, CardinalDirection.N));
+        Probe probe = new Probe("first probe", new Position(5, 5, CardinalDirection.NORTH));
         assertTrue(field.allocateNewProbe(probe));
         assertFalse(field.isFree(5, 5));
     }

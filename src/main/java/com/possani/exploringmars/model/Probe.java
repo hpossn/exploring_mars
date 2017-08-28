@@ -2,12 +2,10 @@ package com.possani.exploringmars.model;
 
 import com.possani.exploringmars.enums.CardinalDirection;
 import com.possani.exploringmars.enums.Command;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by hugo. All rights reserved.
  */
-@Component
 public class Probe {
 
     private final Position initialPosition;
@@ -18,8 +16,8 @@ public class Probe {
         this.name = name;
 
         // TODO : Validate initial position
-        this.initialPosition = initialPosition;
-        this.currentPosition = initialPosition;
+        this.initialPosition = new Position(initialPosition);
+        this.currentPosition = new Position(initialPosition);
     }
 
     public String getName() {
@@ -38,10 +36,10 @@ public class Probe {
         CardinalDirection currentDirection = currentPosition.getCardinalDirection();
 
         switch (turnToDirection) {
-            case L:
+            case LEFT:
                 currentPosition.setCardinalDirection(currentDirection.left());
                 break;
-            case R:
+            case RIGHT:
                 currentPosition.setCardinalDirection(currentDirection.right());
             default:
                 break;
@@ -56,17 +54,17 @@ public class Probe {
         Position nextPosition = new Position(currentPosition);
 
         switch (currentDirection) {
-            case N:
+            case NORTH:
                 nextPosition.setY(nextPosition.getY() + 1);
                 break;
-            case S:
+            case SOUTH:
                 nextPosition.setY(nextPosition.getY() - 1);
                 break;
-            case W:
-                nextPosition.setY(nextPosition.getX() - 1);
+            case WEST:
+                nextPosition.setX(nextPosition.getX() - 1);
                 break;
-            case E:
-                nextPosition.setY(nextPosition.getX() + 1);
+            case EAST:
+                nextPosition.setX(nextPosition.getX() + 1);
                 break;
             default:
                 throw new IllegalStateException("Invalid cardinal direction");
@@ -78,9 +76,5 @@ public class Probe {
     public Position move(Position nextPosition) {
         this.currentPosition = nextPosition;
         return currentPosition;
-    }
-
-    public Position readCommands(Command[] commands) {
-        return null;
     }
 }
