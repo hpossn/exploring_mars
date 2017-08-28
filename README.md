@@ -1,10 +1,10 @@
 # Exploring Mars Project
 
-Este projeto consiste em um simples ambiente para movimentação de uma sonda fictícia por meio de uma API REST. O funcionamento e os requisitos necesários são encontrados em: [Elo7](https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c).
+Este projeto consiste em um simples ambiente para movimentação de sonda fictícia por meio de uma API REST. O funcionamento e os requisitos necessários são encontrados em: [Elo7](https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c).
 
 ## API REST
 
-A API desenvolvida possibilita a criação e exclusão campo (field) e a criação e execução de novas sondas (probes). A primeira chamada deve, obrigatóriamente, ser para o endpoint que cria um novo campo. Caso tente executar uma exploração antes de o campo ser definido, receberá um HTTP Status PRECONDITION_FAILED.
+A API desenvolvida possibilita a criação e exclusão de campo (field) e a criação e execução de novas sondas (probes). A primeira chamada deve, obrigatoriamente, ser para o endpoint que cria o campo novo. Caso tente executar uma exploração antes de o campo ser definido, receberá o HTTP status PRECONDITION_FAILED.
 
 ### Endpoints
 1. POST: /field
@@ -50,7 +50,7 @@ Recebe uma lista com as informações de cada uma das sondas. O requisito era pa
 
 ### Considerações
 
-O programa aceita um número arbitrário de sondas, e pode ter suas funções expandidas com facilidade. Há também uma resolução de colisões simples, documentadas em testes. Quando há uma colisão para um passo intermediário, o programa lê os comandos seguintes, até o próximo M (move), para identificar se há possibilidade de ir àquela posição. Caso não seja possível, retorna-se a posição atual da sonda.
+O programa aceita um número arbitrário de sondas, e pode ter suas funções expandidas com facilidade. Há também uma resolução de colisões simples, documentada em testes. Quando há uma colisão para um passo intermediário, o programa lê os comandos seguintes, até o próximo M (move), para identificar se há possibilidade de ir àquela posição. Caso não seja possível, é mantida a posição atual da sonda.
 Há disponível também a [Collection do Postman](https://www.getpostman.com/collections/e54e3c028cfdc22769cb) criada com as chamadas à API.
 
 
