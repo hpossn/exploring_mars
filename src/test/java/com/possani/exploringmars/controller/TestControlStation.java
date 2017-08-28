@@ -93,6 +93,43 @@ public class TestControlStation {
     }
 
     @Test
+    public void placeSecondProbeWhereFirstOneIs() {
+        List<Command> firstProbeCommands = Arrays.asList(Command.LEFT,
+                                                         Command.MOVE,
+                                                         Command.LEFT,
+                                                         Command.MOVE,
+                                                         Command.LEFT,
+                                                         Command.MOVE,
+                                                         Command.LEFT,
+                                                         Command.MOVE,
+                                                         Command.MOVE);
+
+        Probe firstProbe = new Probe("First Probe", new Position(1, 2, CardinalDirection.NORTH), firstProbeCommands);
+
+        Position firstProbeFinalPosition = controlStation.controlProbe(firstProbe, field);
+        Position firstProbeExpectedPosition = new Position(1, 3, CardinalDirection.NORTH);
+        assertEquals(firstProbeExpectedPosition, firstProbeFinalPosition);
+
+        List<Command> secondProbeCommands = Arrays.asList(Command.MOVE,
+                                                          Command.MOVE,
+                                                          Command.RIGHT,
+                                                          Command.MOVE,
+                                                          Command.MOVE,
+                                                          Command.RIGHT,
+                                                          Command.MOVE,
+                                                          Command.RIGHT,
+                                                          Command.RIGHT,
+                                                          Command.MOVE);
+
+        Probe secondProbe = new Probe("Second Probe", new Position(1, 3, CardinalDirection.EAST), secondProbeCommands);
+
+        Position secondProbeFinalPosition = controlStation.controlProbe(secondProbe, field);
+        Position secondProbeExpectedPosition = new Position(-1, -1, CardinalDirection.NORTH);
+
+        assertEquals(secondProbeExpectedPosition, secondProbeFinalPosition);
+    }
+
+    @Test
     public void borderCollisionWithNoResolution() {
         List<Command> firstProbeCommands = Arrays.asList(Command.MOVE,
                                                          Command.MOVE,

@@ -29,7 +29,9 @@ public class ControlStation {
             return probe.getCurrentPosition();
         }
 
-        field.allocateNewProbe(probe);
+        if(!field.allocateNewProbe(probe)) {
+            return new Position(-1, -1, CardinalDirection.NORTH);
+        }
 
         boolean allowedToMove = true;
         int currentIndex = 0;
